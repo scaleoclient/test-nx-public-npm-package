@@ -18,8 +18,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16.16.0'
-          cache: 'npm'
-          cache-dependency-path: package-lock.json
 
       - uses: nrwl/nx-set-shas@v3
 
