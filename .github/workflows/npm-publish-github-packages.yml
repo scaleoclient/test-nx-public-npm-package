@@ -19,7 +19,10 @@ jobs:
         with:
           node-version: '16.16.0'
 
-      - uses: nrwl/nx-set-shas@v3
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
+        with:
+          main-branch-name: ${{ github.base_ref }}
 
       - name: Check Node.js and npm version
         run: node -v
@@ -27,27 +30,16 @@ jobs:
       - name: Check npm version
         run: npm -version
 
+      - name: Print node/npm/yarn/pnpm versions
+        id: versions
+        run: |
+          echo "Node: $(node --version)"
+          echo "NPM: $(npm --version)"
+
       - name: Install dependencies
         run: npm ci --ignore-scripts
 
-      - run: npx nx format:check --projects=core
-      - run: npx nx affected --target=lint --parallel=3 --project=core
-      - run: npx nx affected --target=test --parallel=3 --configuration=ci --project=core
-      - run: npx nx affected --target=build --parallel=3 --project=core
-
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - run: npx nx format:check
+      - run: npx nx affected --target=lint --parallel=3
+      - run: npx nx affected --target=test --parallel=3 --configuration=ci
+      - run: npx nx affected --target=build --parallel=3
