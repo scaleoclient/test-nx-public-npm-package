@@ -1,6 +1,6 @@
 {
   "name": "@scaleo/test-public-core",
-  "version": "0.0.1",
+  "version": "0.0.0-semantic-release",
   "peerDependencies": {
     "@angular/common": "^15.2.0",
     "@angular/core": "^15.2.0"
