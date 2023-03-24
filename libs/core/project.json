@@ -41,6 +41,14 @@
       "options": {
         "lintFilePatterns": ["libs/core/**/*.ts", "libs/core/**/*.html"]
       }
+    },
+    "release": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npx semantic-release-plus --extends ./libs/core/release.config.js",
+        "parallel": false
+      }
     }
   },
   "tags": []
