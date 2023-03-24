@@ -1,5 +1,5 @@
-const name = 'test-public-core';
-const srcRoot = `libs/core`;
+const name = 'core';
+const srcRoot = `libs/${name}`;
 
 module.exports = {
   extends: 'semantic-release-npm-github-publish',
