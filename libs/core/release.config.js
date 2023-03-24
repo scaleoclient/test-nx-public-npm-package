@@ -1,8 +1,8 @@
 const name = 'test-public-core';
-const srcRoot = `packages/${name}`;
+const srcRoot = `libs/core`;
 
 module.exports = {
-  extends: 'release.config.base.js',
+  extends: 'semantic-release-npm-github-publish',
   pkgRoot: `dist/${srcRoot}`,
   tagFormat: name + '-v${version}',
   commitPaths: [`${srcRoot}/*`],
