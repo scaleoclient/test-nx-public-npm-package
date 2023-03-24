@@ -24,13 +24,7 @@ jobs:
         with:
           main-branch-name: ${{ github.base_ref }}
 
-      - name: Check Node.js and npm version
-        run: node -v
-
-      - name: Check npm version
-        run: npm -version
-
-      - name: Print node/npm/yarn/pnpm versions
+      - name: Print node/npm versions
         id: versions
         run: |
           echo "Node: $(node --version)"
@@ -43,3 +37,12 @@ jobs:
       - run: npx nx affected --target=lint --parallel=3
       - run: npx nx affected --target=test --parallel=3 --configuration=ci
       - run: npx nx affected --target=build --parallel=3
+
+      - name: Release
+        if: ${{ success() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          npx nx affected --target release --all
+          npx semantic-release-plus
