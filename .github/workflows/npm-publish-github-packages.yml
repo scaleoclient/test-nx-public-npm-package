@@ -45,4 +45,4 @@ jobs:
           NPM_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           npx nx affected --target release --project=core
-          npx semantic-release-plus
+          npx semantic-release-plus --extends ./libs/core/release.config.js
